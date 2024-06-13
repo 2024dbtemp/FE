@@ -95,7 +95,7 @@ export const getFood = async (name, minPrice, maxPrice, categories) => {
         name: name || undefined,
         minPrice: minPrice || undefined,
         maxPrice: maxPrice || undefined,
-        categories: categories || undefined,
+        categories: categories.length > 0 ? categories : undefined,
       },
     });
     return response.data;
@@ -104,7 +104,6 @@ export const getFood = async (name, minPrice, maxPrice, categories) => {
     throw error;
   }
 };
-
 export const getFoodbyName = async (name) => {
   try {
     const response = await instance.get(`/foods`, {

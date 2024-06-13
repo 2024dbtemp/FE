@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getCart, putCartAmount, postCart } from "../api/users"; // postCart 함수 추가
+import {
+  getCart,
+  putCartAmount,
+  postCart,
+  deleteCart,
+  postOrders,
+} from "../api/users"; // postOrders 함수 추가
 
 const CartWrapper = styled.div`
   max-width: 60vw;
@@ -50,7 +56,7 @@ const CartItemImage = styled.img`
   height: 200px;
   object-fit: cover;
   border-radius: 8px;
-  margin-right: 20px;
+  margin-right: 2rem;
 `;
 
 const QuantityInput = styled.input`
@@ -70,9 +76,20 @@ const UpdateButton = styled.button`
   margin-left: 10px;
 `;
 
+const DeleteButton = styled.button`
+  background-color: #004098;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: 10px;
+`;
+
 const CartSummary = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 20px;
   font-size: 1.2rem;
   font-weight: bold;
@@ -149,10 +166,33 @@ const Cart = () => {
     }
   };
 
+  const handleDeleteCartItem = async (index) => {
+    const item = cartData.cartFoodResponses[index];
+    try {
+      const response = await deleteCart(item.name);
+      if (response.status === 200) {
+        setCartData((prevCartData) => {
+          const newCartData = { ...prevCartData };
+          newCartData.cartFoodResponses.splice(index, 1);
+          newCartData.totalFoodCount -= 1;
+          newCartData.totalPrice = newCartData.cartFoodResponses.reduce(
+            (sum, item) => sum + item.totalPrice,
+            0
+          );
+          return newCartData;
+        });
+        alert("장바구니에서 삭제되었습니다.");
+      }
+    } catch (error) {
+      console.error("장바구니 항목 삭제 실패", error);
+    }
+  };
+
   const handleOrder = async () => {
     try {
-      const response = await postCart(cartData.cartFoodResponses);
+      const response = await postOrders();
       if (response.status === 200) {
+        console.log(response);
         alert("주문이 완료되었습니다.");
       }
     } catch (error) {
@@ -190,6 +230,9 @@ const Cart = () => {
               <UpdateButton onClick={() => handleUpdateCart(index)}>
                 변경
               </UpdateButton>
+              <DeleteButton onClick={() => handleDeleteCartItem(index)}>
+                삭제
+              </DeleteButton>
             </div>
             <p>합계: {item.totalPrice.toLocaleString()}원</p>
           </CartItemDetails>

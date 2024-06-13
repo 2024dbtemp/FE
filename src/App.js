@@ -15,7 +15,7 @@ function App() {
 
   const handleSearch = (term, price) => {
     setSearchTerm(term);
-    setSearchPrice(price || { min: "", max: "" });
+    setSearchPrice(price);
   };
 
   return (

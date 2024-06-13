@@ -60,7 +60,7 @@ const PriceButton = styled.button`
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchPrice, setSearchPrice] = useState({ min: "", max: "" });
+  const [searchPrice, setSearchPrice] = useState({ min: null, max: null });
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -69,17 +69,19 @@ const SearchBar = ({ onSearch }) => {
   };
 
   const handleSearch = () => {
-    console.log(searchPrice);
-    console.log(searchTerm);
-    onSearch(searchTerm, searchPrice);
+    const intMin =
+      searchPrice.min !== null ? parseInt(searchPrice.min, 10) : null;
+    const intMax =
+      searchPrice.max !== null ? parseInt(searchPrice.max, 10) : null;
+    onSearch(searchTerm, { min: intMin, max: intMax });
   };
 
   const handlePriceChange = (e) => {
     const { name, value } = e.target;
-    const intValue = parseInt(value, 10);
+    const intValue = value === "" ? null : parseInt(value, 10);
     setSearchPrice((prevPrice) => ({
       ...prevPrice,
-      [name]: isNaN(intValue) ? 0 : intValue,
+      [name]: intValue,
     }));
   };
 
@@ -100,14 +102,14 @@ const SearchBar = ({ onSearch }) => {
           type="number"
           placeholder="최소 가격"
           name="min"
-          value={searchPrice.min}
+          value={searchPrice.min !== null ? searchPrice.min : ""}
           onChange={handlePriceChange}
         />
         <PriceInput
           type="number"
           placeholder="최대 가격"
           name="max"
-          value={searchPrice.max}
+          value={searchPrice.max !== null ? searchPrice.max : ""}
           onChange={handlePriceChange}
         />
         <PriceButton onClick={handleSearch}>검색</PriceButton>

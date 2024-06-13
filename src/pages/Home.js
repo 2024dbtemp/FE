@@ -7,11 +7,11 @@ const Wrapper = styled.div`
   margin: 2% auto;
 `;
 
-const Home = ({ showSearchBar, searchTerm }) => {
+const Home = ({ searchTerm, searchPrice }) => {
   return (
     <div>
       <Wrapper>
-        <Category searchTerm={searchTerm} />
+        <Category searchTerm={searchTerm} searchPrice={searchPrice} />
       </Wrapper>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import { getCategory } from "../api/users";
+import { getCategory } from "../api/users"; // getCategory API 호출
 import MenuList from "./MenuList";
 
 const Wrapper = styled.div`
@@ -47,7 +47,7 @@ const Category = ({ searchTerm, searchPrice }) => {
     const fetchCategories = async () => {
       try {
         const data = await getCategory();
-        setCategories(data);
+        setCategories([{ categoryName: "전체", noOfFood: 0 }, ...data]);
       } catch (error) {
         console.log("카테고리 출력 실패", error);
       } finally {
@@ -69,12 +69,6 @@ const Category = ({ searchTerm, searchPrice }) => {
     <div>
       <Wrapper>
         <CategoryWrapper>
-          <Button
-            selected={selectedCategory === "전체"}
-            onClick={() => handleButtonClick("전체")}
-          >
-            전체
-          </Button>
           {categories.map((category, index) => (
             <Button
               key={index}

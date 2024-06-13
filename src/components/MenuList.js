@@ -65,6 +65,9 @@ const MenuList = ({
       setLoading(false);
     }
   };
+  useEffect(() => {
+    console.log(searchTerm, searchPrice);
+  }, [searchTerm, searchPrice]);
 
   useEffect(() => {
     fetchMenuItems(

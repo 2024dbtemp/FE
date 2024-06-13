@@ -65,20 +65,21 @@ const SearchBar = ({ onSearch }) => {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSearch();
-      console.log(searchPrice);
-      console.log(searchTerm);
     }
   };
 
   const handleSearch = () => {
+    console.log(searchPrice);
+    console.log(searchTerm);
     onSearch(searchTerm, searchPrice);
   };
 
   const handlePriceChange = (e) => {
     const { name, value } = e.target;
+    const intValue = parseInt(value, 10);
     setSearchPrice((prevPrice) => ({
       ...prevPrice,
-      [name]: value,
+      [name]: isNaN(intValue) ? 0 : intValue,
     }));
   };
 

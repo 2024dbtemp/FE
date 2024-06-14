@@ -89,7 +89,7 @@ const DeleteButton = styled.button`
 
 const CartSummary = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 20px;
   font-size: 1.2rem;
   font-weight: bold;
@@ -192,7 +192,7 @@ const Cart = () => {
     try {
       const response = await postOrders();
       if (response.status === 200) {
-        console.log(response);
+        setCartData(null); // 장바구니 초기화
         alert("주문이 완료되었습니다.");
       }
     } catch (error) {

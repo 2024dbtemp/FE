@@ -79,6 +79,7 @@ const MyOrder = () => {
     const fetchOrders = async () => {
       try {
         const data = await getOrders();
+        console.log(data);
         setOrders(data);
       } catch (error) {
         console.error("주문 내역 불러오기 실패", error);
@@ -137,8 +138,10 @@ const MyOrder = () => {
         <OrderItem key={index}>
           <OrderItemImage src={order.imageUrl} alt="음식 이미지" />
           <OrderItemDetails>
-            <OrderItemName>{order.name}</OrderItemName>
-            <OrderItemDate>{order.orderDate}</OrderItemDate>
+            <OrderItemName>{order.foodName}</OrderItemName>
+            <OrderItemDate>
+              {new Date(order.orderDate).toLocaleString()}
+            </OrderItemDate>
           </OrderItemDetails>
           <OrderItemPrice>{order.totalPrice.toLocaleString()}원</OrderItemPrice>
         </OrderItem>

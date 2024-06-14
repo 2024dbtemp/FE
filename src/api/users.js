@@ -88,22 +88,26 @@ export const getCategory = async () => {
 };
 
 // 음식 목록 가져오기
-export const getFood = async (name, minPrice, maxPrice, categories) => {
+export const getFood = async (name, minPrice, maxPrice, category) => {
   try {
-    const response = await instance.get("/foods", {
-      params: {
-        name: name || undefined,
-        minPrice: minPrice || undefined,
-        maxPrice: maxPrice || undefined,
-        categories: categories.length > 0 ? categories : undefined,
-      },
-    });
+    const params = {
+      name: name || undefined,
+      minPrice: minPrice || undefined,
+      maxPrice: maxPrice || undefined,
+    };
+
+    if (category) {
+      params.categories = category;
+    }
+
+    const response = await instance.get("/foods", { params });
     return response.data;
   } catch (error) {
     console.log("에러", error);
     throw error;
   }
 };
+
 export const getFoodbyName = async (name) => {
   try {
     const response = await instance.get(`/foods`, {

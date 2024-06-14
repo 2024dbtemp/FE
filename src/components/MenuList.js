@@ -72,7 +72,7 @@ const MenuList = ({
       searchTerm,
       searchPrice.min,
       searchPrice.max,
-      selectedCategory === "전체" ? [] : [selectedCategory]
+      selectedCategory === "전체" ? undefined : selectedCategory
     );
   }, [searchTerm, searchPrice.min, searchPrice.max, selectedCategory]);
 

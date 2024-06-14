@@ -47,7 +47,8 @@ const Category = ({ searchTerm, searchPrice }) => {
     const fetchCategories = async () => {
       try {
         const data = await getCategory();
-        setCategories([{ categoryName: "전체", noOfFood: 0 }, ...data]);
+        const categoryNames = data.map((category) => category.categoryName);
+        setCategories(["전체", ...categoryNames]);
       } catch (error) {
         console.log("카테고리 출력 실패", error);
       } finally {
@@ -69,13 +70,13 @@ const Category = ({ searchTerm, searchPrice }) => {
     <div>
       <Wrapper>
         <CategoryWrapper>
-          {categories.map((category, index) => (
+          {categories.map((categoryName, index) => (
             <Button
               key={index}
-              selected={selectedCategory === category.categoryName}
-              onClick={() => handleButtonClick(category.categoryName)}
+              selected={selectedCategory === categoryName}
+              onClick={() => handleButtonClick(categoryName)}
             >
-              {category.categoryName}
+              {categoryName}
             </Button>
           ))}
         </CategoryWrapper>

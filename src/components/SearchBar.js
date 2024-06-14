@@ -59,16 +59,20 @@ const PriceButton = styled.button`
 `;
 
 const SearchBar = ({ onSearch }) => {
+  //검색어와 가격 범위를 관리
   const [searchTerm, setSearchTerm] = useState("");
   const [searchPrice, setSearchPrice] = useState({ min: null, max: null });
 
+  //검색어 입력창에서 엔터를 눌러도 검색이 되게 함
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSearch();
     }
   };
 
+  //검색어와 가격 범위를 onSearch 함수에 전달
   const handleSearch = () => {
+    //입력된 최소/최대 가격을 정수로 변환
     const intMin =
       searchPrice.min !== null ? parseInt(searchPrice.min, 10) : null;
     const intMax =
@@ -76,9 +80,12 @@ const SearchBar = ({ onSearch }) => {
     onSearch(searchTerm, { min: intMin, max: intMax });
   };
 
+  //input 태그에 입력이 들어왔을 경우 상태를 업데이트
   const handlePriceChange = (e) => {
     const { name, value } = e.target;
+    //빈 값일 경우엔 null로 처리
     const intValue = value === "" ? null : parseInt(value, 10);
+    //가격 범위 상태 업데이트
     setSearchPrice((prevPrice) => ({
       ...prevPrice,
       [name]: intValue,
@@ -86,6 +93,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
+    //검색창과 가격 범위 설정 부분
     <Container>
       <SearchWrapper>
         <Search

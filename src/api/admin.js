@@ -1,5 +1,7 @@
 import axios from "axios";
 
+//관리자 모드를 위한 api
+
 const instance = axios.create({
   baseURL: "http://localhost:8080",
   headers: {
@@ -20,7 +22,7 @@ instance.interceptors.request.use(
   }
 );
 
-const putCatagory = async (categoryName) => {
+export const putCatagory = async (categoryName) => {
   try {
     const response = await instance.put(
       `/admin/categories/${categoryName}`,
@@ -36,7 +38,7 @@ const putCatagory = async (categoryName) => {
   }
 };
 
-const deleteCategory = async (categoryName) => {
+export const deleteCategory = async (categoryName) => {
   try {
     const response = await instance.delete(
       `/admin/categories/${categoryName}`,
@@ -55,7 +57,7 @@ const deleteCategory = async (categoryName) => {
   }
 };
 
-const addCategory = async (categoryName) => {
+export const addCategory = async (categoryName) => {
   try {
     const response = await instance.post(`/admin/categories`, categoryName);
     if (response.status === 200) {
@@ -71,9 +73,9 @@ const addCategory = async (categoryName) => {
   }
 };
 
-const putFood = async (foodName) => {
+export const putFood = async (foodName, foodData) => {
   try {
-    const response = await instance.put(`/admin/foods/${foodName}`, foodName);
+    const response = await instance.put(`/admin/foods/${foodName}`, foodData);
     if (response.status === 200) {
       alert("메뉴 수정이 완료되었습니다.");
       return response.data;
@@ -87,7 +89,7 @@ const putFood = async (foodName) => {
   }
 };
 
-const deleteFood = async (foodName) => {
+export const deleteFood = async (foodName) => {
   try {
     const response = await instance.delete(
       `/admin/foods/${foodName}`,
@@ -106,20 +108,27 @@ const deleteFood = async (foodName) => {
   }
 };
 
-const getFood = async () => {
+export const getFood = async (name, minPrice, maxPrice, category) => {
   try {
-    const response = await instance.get(`/admin/foods`);
+    const params = {
+      name: name || undefined,
+      minPrice: minPrice || undefined,
+      maxPrice: maxPrice || undefined,
+    };
+
+    if (category) {
+      params.categories = category;
+    }
+
+    const response = await instance.get("/foods", { params });
     return response.data;
   } catch (error) {
-    if (error.response.status === 403 || error.response.status === 404) {
-      alert(error.response.data.message);
-    }
-    console.log(error);
+    console.log("에러", error);
     throw error;
   }
 };
 
-const postFood = async (foodInfo) => {
+export const postFood = async (foodInfo) => {
   try {
     const response = await instance.post(`/admin/foods`, foodInfo);
     if (response.status === 200) {

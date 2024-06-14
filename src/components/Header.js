@@ -42,12 +42,14 @@ const MenuItem = styled(Link)`
   text-decoration: none;
 `;
 
+//사용자 모드의 헤더 컴포넌트
 const Header = ({ onSearch, showSearchBar }) => {
+  //상단바의 로그아웃을 누를 시에 사용자 토큰을 없애 로그아웃 시킴
   const logoutUser = () => {
     localStorage.removeItem("authToken");
     alert("로그아웃이 완료되었습니다.");
   };
-
+  //장바구니, 사용자의 주문내역에 갈 수 있도록 Link를 사용
   return (
     <div>
       <Wrapper>

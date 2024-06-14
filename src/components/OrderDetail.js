@@ -70,13 +70,16 @@ const OrderSummary = styled.div`
 `;
 
 const OrderDetail = () => {
+  //URL 파라미터에서 cartId 추출
   const { cartId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    //주문 상세 정보를 서버에서 불러옴
     const fetchOrderDetails = async () => {
       try {
+        //cartId를 이용해서 id에 맞는 주문 상세 내역을 가져옴
         const data = await getOrderbyId(cartId);
         setOrderDetails(data);
         console.log(data);
@@ -99,6 +102,7 @@ const OrderDetail = () => {
   }
 
   return (
+    //주문 정보가 없을 경우를 따로 처리해주고, 주문 내역의 상세 정보를 가져오도록 함
     <OrderWrapper>
       <OrderDetailTitle>주문 상세</OrderDetailTitle>
       <OrderDetailsWrapper>

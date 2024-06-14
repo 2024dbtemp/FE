@@ -97,13 +97,16 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+//메뉴 상세를 볼 수 있도록 하고 해당 메뉴를 장바구니에 담을 수 있도록 하는 컴포넌트
 const MenuDetail = () => {
+  //메뉴 목록에서 선택한 메뉴로 이동할 수 있도록 하기 위함
   const { name } = useParams();
   const decodedName = decodeURIComponent(name);
   const [menuItem, setMenuItem] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
 
+  //getFoodByName에 메뉴 목록에서 선택한 음식의 이름을 넣어 음식 정보를 받아옴
   useEffect(() => {
     const fetchMenuItem = async () => {
       try {
@@ -117,15 +120,18 @@ const MenuDetail = () => {
     fetchMenuItem();
   }, [decodedName]);
 
+  //"장바구니 담기" 버튼 클릭 시 클릭이벤트 처리를 해주기 위한 함수
+  //postCart에 음식 정보를 넘겨 장바구니에 들어가도록 함
   const handleAddToCart = async () => {
     if (!menuItem) return;
-
+    //장바구니에 추가할 데이터 생성
     const cartData = {
       foodName: menuItem.name,
       quantity: parseInt(quantity, 10),
     };
 
     try {
+      //장바구니 데이터를 서버에 보냄
       const response = await postCart(cartData);
       if (response.status === 200) {
         alert("장바구니에 담겼습니다.");
@@ -138,7 +144,8 @@ const MenuDetail = () => {
   if (!menuItem) {
     return <div>Loading...</div>;
   }
-
+  //api로부터 받은 정보를 가져와 메뉴의 상세 정보들을 나열
+  //img 부분은 디자인적 요소를 위해 추가한 부분으로 기본 이미지인 회색 이미지로 대체
   return (
     <MenuDetailWrapper>
       <Header>

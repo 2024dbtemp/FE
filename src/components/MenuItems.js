@@ -46,17 +46,22 @@ const MenuPrice = styled.p`
   font-weight: bold;
 `;
 
+//메뉴를 출력하는 컴포넌트
 const MenuItems = ({
   selectedCategory,
   searchTerm,
   searchPrice = { min: "", max: "" },
 }) => {
+  //메뉴 아이템을 동적으로 관리하기 위함
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  //getFood에 음식 이름, 최소/최대 가격, 카테고리를 파라미터로 보내 필터링된 음식 아이템만을 출력
+  //이떄 이 모든 값이 빈 값인 즉, 전체 메뉴가 출력되는 상태가 기본값
   const fetchMenuItems = async (name, minPrice, maxPrice, category) => {
     setLoading(true);
     try {
+      //서버에 파라미터를 보낸 후, 정보를 받아옴
       const data = await getFood(name, minPrice, maxPrice, category);
       console.log(data);
       setMenuItems(data);
@@ -67,6 +72,7 @@ const MenuItems = ({
     }
   };
 
+  //검색어(검색할 음식명), 최소/최대 가격, 선택한 카테고리명을 동적으로 관리해서 api에 넘기기 위한 부분
   useEffect(() => {
     fetchMenuItems(
       searchTerm,
@@ -81,8 +87,10 @@ const MenuItems = ({
   }
 
   return (
+    //api로부터 받은 메뉴 아이템들을 map을 통해 각 메뉴의 상세 정보를 출력
     <div>
       {menuItems.map((item, index) => (
+        // 해당 부분에서 Link를 써서 단일 메뉴 아이템 하나의 상세 페이지로 이동할 수 있게 함
         <MenuItem key={index} to={`/menu/${encodeURIComponent(item.name)}`}>
           <MenuImage src={item.imageUrl} alt={item.name} />
           <MenuDetails>

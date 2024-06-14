@@ -78,11 +78,12 @@ const MyOrder = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  //시작일과 종료일이 변경될 때마다 주문 내역을 가져옴
   useEffect(() => {
     const fetchOrders = async () => {
       try {
+        //서버 시작/종료일을 보내 필터링된 주문내역을 가져옴
         const data = await getOrders({ startDate, endDate });
-        console.log(data);
         setOrders(data);
       } catch (error) {
         console.error("주문 내역 불러오기 실패", error);
@@ -94,6 +95,7 @@ const MyOrder = () => {
     fetchOrders();
   }, [startDate, endDate]);
 
+  //날짜 입력 필드 값이 변결될 때마다 상태 업데이트
   const handleDateChange = (e) => {
     const { name, value } = e.target;
     if (name === "start") {
@@ -127,6 +129,7 @@ const MyOrder = () => {
       ) : orders.length === 0 ? (
         <div>주문 내역이 없습니다.</div>
       ) : (
+        // 주문내역이 있을 경우 주문 내역을 출력
         orders.map((order, index) => (
           <OrderItem key={index}>
             <OrderItemDetails to={`/orders/${order.cartId}`}>

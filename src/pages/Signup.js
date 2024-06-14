@@ -81,6 +81,7 @@ const SignUpLink = styled.a`
   margin-left: auto;
 `;
 
+//회원가입을 위한 컴포넌트
 const Signup = () => {
   const [name, setName] = useState("");
   const [cno, setCno] = useState("");
@@ -88,10 +89,12 @@ const Signup = () => {
   const [phone, setPhone] = useState("");
   const usenavigate = useNavigate();
 
+  //로그인 버튼을 누르면 로그인 페이지로 이동
   const onLogin = () => {
     usenavigate("/login");
   };
 
+  //Input 태그를 통해 입력받은 데이터를 이용해 상태 업데이트
   const onChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") {
@@ -105,6 +108,7 @@ const Signup = () => {
     }
   };
 
+  //입력받은 데이터를 addUser에 넘겨 회원가입한 고객 정보를 서버에 넘기도록 함
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -114,6 +118,7 @@ const Signup = () => {
         password: password,
         phoneNumbers: phone,
       });
+      //회원가입이 완료되면 로그인 페이지로 이동
       onLogin();
     } catch (error) {
       console.error("Failed to sign up:", error);
@@ -121,6 +126,7 @@ const Signup = () => {
   };
 
   return (
+    //Input 태그를 통해 사용자 입력을 받을 수 있게 함
     <SignupWrapper>
       <Header>
         <Logo>C-ON</Logo>

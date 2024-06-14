@@ -9,12 +9,6 @@ const OrderWrapper = styled.div`
   padding: 20px;
 `;
 
-const OrderTitle = styled.h1`
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
-
 const OrderItem = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,6 +34,8 @@ const OrderDate = styled.p`
 const OrderItemName = styled.p`
   font-size: 1rem;
   font-weight: bold;
+  width: 300px;
+  text-align: left;
 `;
 
 const OrderItemDate = styled.p`
@@ -113,7 +109,7 @@ const OrderDetail = () => {
             : "날짜 정보 없음"}
         </OrderDate>
         <OrderItemName>
-          {orderDetails.representativeFoodName} 외{" "}
+          {orderDetails.orderFoodResponses[0].name} 외{" "}
           {orderDetails.totalFoodCount - 1}개
         </OrderItemName>
         <OrderItemDate>

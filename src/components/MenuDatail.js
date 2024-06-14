@@ -167,7 +167,7 @@ const MenuDetail = () => {
             </PriceQuantityWrapper>
           </div>
           <ButtonWrapper>
-            <Button onClick={() => navigate("/")}>취소하기</Button>
+            <Button onClick={() => navigate("/")}>뒤로가기</Button>
             <Button onClick={handleAddToCart}>장바구니 담기</Button>
           </ButtonWrapper>
         </DetailsWrapper>

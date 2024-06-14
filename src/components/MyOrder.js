@@ -117,14 +117,14 @@ const MyOrder = () => {
       <DateInputWrapper>
         <label>조회 시작일</label>
         <DateInput
-          type="date"
+          type="datetime-local"
           name="start"
           value={startDate}
           onChange={handleDateChange}
         />
         <label>조회 종료일</label>
         <DateInput
-          type="date"
+          type="datetime-local"
           name="end"
           value={endDate}
           onChange={handleDateChange}

@@ -125,10 +125,10 @@ export const getFoodbyName = async (name) => {
 
 export const getOrders = async ({ startDate, endDate }) => {
   try {
-    const response = await instance.get(`/orders`, {
+    const response = await instance.get("/orders", {
       params: {
-        startDate: startDate || undefined,
-        endDate: endDate || undefined,
+        startDate: startDate ? `${startDate}:00` : undefined,
+        endDate: endDate ? `${endDate}:59` : undefined,
       },
     });
     return response.data;

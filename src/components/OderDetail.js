@@ -29,6 +29,7 @@ const OrderDetailsWrapper = styled.div`
   flex-direction: column;
   align-items: start;
   margin-right: auto;
+  border-bottom: 1px solid #004098;
 `;
 
 const OrderDate = styled.p`
@@ -46,6 +47,10 @@ const OrderItemDate = styled.p`
 `;
 
 const OrderItemQuantity = styled.p`
+  font-size: 1rem;
+`;
+
+const OrderItemPrice = styled.p`
   font-size: 1rem;
 `;
 
@@ -77,7 +82,7 @@ const OrderDetail = () => {
     const fetchOrderDetails = async () => {
       try {
         const data = await getOrderbyId(cartId);
-        setOrderDetails(data[0]);
+        setOrderDetails(data);
         console.log(data);
       } catch (error) {
         console.error("주문 상세 정보 불러오기 실패", error);
@@ -124,14 +129,18 @@ const OrderDetail = () => {
             : "가격 정보 없음"}
         </OrderItemTotalPrice>
       </OrderDetailsWrapper>
-      {orderDetails.foodDetails &&
-        orderDetails.foodDetails.map((food, index) => (
+      {orderDetails.orderFoodResponses &&
+        orderDetails.orderFoodResponses.map((food, index) => (
           <OrderItem key={index}>
-            <OrderItemName>{food.foodName}</OrderItemName>
+            <OrderItemName>{food.name}</OrderItemName>
             <OrderItemQuantity>{food.quantity}개</OrderItemQuantity>
+            <OrderItemPrice>
+              단일 메뉴 가격:{" "}
+              {food.price ? food.price.toLocaleString() + "원" : "정보 없음"}
+            </OrderItemPrice>
             <OrderItemTotalPrice>
-              {food.totalPrice
-                ? food.totalPrice.toLocaleString() + "원"
+              {food.price && food.quantity
+                ? (food.price * food.quantity).toLocaleString() + "원"
                 : "가격 정보 없음"}
             </OrderItemTotalPrice>
           </OrderItem>

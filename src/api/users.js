@@ -156,7 +156,7 @@ export const postOrders = async () => {
 
 export const getOrderbyId = async (cartId) => {
   try {
-    const response = await instance.get(`/orders`, { cartId });
+    const response = await instance.get(`/orders/${cartId}`);
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 404) {

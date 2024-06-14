@@ -2,13 +2,14 @@ import "./App.css";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Home from "./pages/Home";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useState } from "react";
 import MenuDetail from "./components/MenuDatail";
 import Cart from "./components/Cart";
 import MyOrder from "./components/MyOrder";
-import OrderDetail from "./components/OderDetail";
+import OrderDetail from "./components/OrderDetail";
+import AdminHeader from "./components/AdminHeader";
+import MenuList from "./components/MenuList";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -31,7 +32,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Home searchTerm={searchTerm} searchPrice={searchPrice} />
+                <MenuList searchTerm={searchTerm} searchPrice={searchPrice} />
               }
             />
           </Route>
@@ -41,6 +42,7 @@ function App() {
             <Route path="/myorder" element={<MyOrder />} />
             <Route path="/orders/:cartId" element={<OrderDetail />} />
           </Route>
+          <Route element={<AdminHeader />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

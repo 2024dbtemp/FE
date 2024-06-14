@@ -103,14 +103,6 @@ const MyOrder = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!orders.length) {
-    return <div>주문 내역이 없습니다.</div>;
-  }
-
   return (
     <OrderWrapper>
       <OrderTitle>주문 내역</OrderTitle>
@@ -130,17 +122,30 @@ const MyOrder = () => {
           onChange={handleDateChange}
         />
       </DateInputWrapper>
-      {orders.map((order, index) => (
-        <OrderItem key={index}>
-          <OrderItemDetails to={`/orders/${order.cartId}`}>
-            <OrderItemName>{order.representativeFoodName}</OrderItemName>
-            <OrderItemDate>
-              {new Date(order.orderDateTime).toLocaleString()}
-            </OrderItemDate>
-          </OrderItemDetails>
-          <OrderItemPrice>{order.totalPrice.toLocaleString()}원</OrderItemPrice>
-        </OrderItem>
-      ))}
+      {loading ? (
+        <div>Loading...</div>
+      ) : orders.length === 0 ? (
+        <div>주문 내역이 없습니다.</div>
+      ) : (
+        orders.map((order, index) => (
+          <OrderItem key={index}>
+            <OrderItemDetails to={`/orders/${order.cartId}`}>
+              <OrderItemName>
+                {order.representativeFoodName}{" "}
+                {order.totalFoodCount > 1
+                  ? "외 " + (order.totalFoodCount - 1)
+                  : ""}
+              </OrderItemName>
+              <OrderItemDate>
+                {new Date(order.orderDateTime).toLocaleString()}
+              </OrderItemDate>
+            </OrderItemDetails>
+            <OrderItemPrice>
+              {order.totalPrice.toLocaleString()}원
+            </OrderItemPrice>
+          </OrderItem>
+        ))
+      )}
     </OrderWrapper>
   );
 };

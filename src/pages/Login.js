@@ -99,6 +99,9 @@ const Login = () => {
     e.preventDefault();
     try {
       await authUser({ cno: cno, password: password });
+      if (cno === "C0") {
+        usenavigate("/admin");
+      }
       usenavigate("/");
     } catch (error) {
       console.error("Failed to login:", error);

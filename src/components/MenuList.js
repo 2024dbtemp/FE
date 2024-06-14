@@ -1,97 +1,96 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { getFood } from "../api/users";
+import styled, { css } from "styled-components";
+import { getCategory } from "../api/users";
+import MenuItems from "./MenuItems";
 
-const MenuItem = styled(Link)`
-  display: flex;
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #004098;
-  border-radius: 8px;
-  transition: border 0.2s ease 0s;
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-`;
-
-const MenuImage = styled.img`
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin: 0.5rem;
-  margin-right: 4rem;
-`;
-
-const MenuDetails = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  flex-grow: 1;
-  justify-content: center;
+  width: 60vw;
+  margin: 2% auto;
 `;
 
-const MenuName = styled.h4`
-  margin: 0 0 10px 0;
+const CategoryWrapper = styled.div`
+  margin-bottom: 60px;
 `;
 
-const MenuDescription = styled.p`
-  margin: 0 0 10px 0;
-  color: #666;
+const Button = styled.button`
+  float: left;
+  border: 1px solid #004098;
+  border-radius: 30px;
+  background-color: white;
+  color: #004098;
+  font-weight: 600;
+  padding: 10px;
+  width: 80px;
+  font-size: 0.8rem;
+  margin-right: 10px;
+  cursor: pointer;
+  ${({ selected }) =>
+    selected &&
+    css`
+      background-color: #004098;
+      border: none;
+      color: white;
+    `}
+  &:hover {
+    background-color: #004098;
+    border: none;
+    color: white;
+  }
 `;
 
-const MenuPrice = styled.p`
-  margin-top: auto;
-  font-weight: bold;
-`;
-
-const MenuList = ({
-  selectedCategory,
-  searchTerm,
-  searchPrice = { min: "", max: "" },
-}) => {
-  const [menuItems, setMenuItems] = useState([]);
+const MenuList = ({ searchTerm, searchPrice }) => {
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const fetchMenuItems = async (name, minPrice, maxPrice, category) => {
-    setLoading(true);
-    try {
-      const data = await getFood(name, minPrice, maxPrice, category);
-      console.log(data);
-      setMenuItems(data);
-    } catch (error) {
-      console.log("메뉴 출력 실패", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [selectedCategory, setSelectedCategory] = useState("전체");
 
   useEffect(() => {
-    fetchMenuItems(
-      searchTerm,
-      searchPrice.min,
-      searchPrice.max,
-      selectedCategory === "전체" ? undefined : selectedCategory
-    );
-  }, [searchTerm, searchPrice.min, searchPrice.max, selectedCategory]);
+    const fetchCategories = async () => {
+      try {
+        const data = await getCategory();
+        const categoryNames = data.map((category) => category.categoryName);
+        console.log(categoryNames);
+        setCategories(["전체", ...categoryNames]);
+      } catch (error) {
+        console.log("카테고리 출력 실패", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  const handleButtonClick = (categoryName) => {
+    setSelectedCategory(categoryName);
+  };
+
   return (
     <div>
-      {menuItems.map((item, index) => (
-        <MenuItem key={index} to={`/menu/${encodeURIComponent(item.name)}`}>
-          <MenuImage src={item.imageUrl} alt={item.name} />
-          <MenuDetails>
-            <MenuName>{item.name}</MenuName>
-            <MenuDescription>{item.description}</MenuDescription>
-            <MenuPrice>{Number(item.price).toLocaleString()}원</MenuPrice>
-          </MenuDetails>
-        </MenuItem>
-      ))}
+      <Wrapper>
+        <CategoryWrapper>
+          {categories.map((categoryName, index) => (
+            <Button
+              key={index}
+              selected={selectedCategory === categoryName}
+              onClick={() => handleButtonClick(categoryName)}
+            >
+              {categoryName}
+            </Button>
+          ))}
+        </CategoryWrapper>
+        <div>
+          <MenuItems
+            selectedCategory={selectedCategory}
+            searchTerm={searchTerm}
+            searchPrice={searchPrice}
+          />
+        </div>
+      </Wrapper>
     </div>
   );
 };

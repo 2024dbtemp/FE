@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import searchpng from "../assets/search.png";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+
+const Container = styled.div`
+  max-width: 60vw;
+  margin: 0 auto;
+`;
 
 const HeaderContainer = styled.div`
   max-width: 60vw;
@@ -52,10 +57,10 @@ const Header = ({ onSearch, showSearchBar }) => {
     <div>
       <Wrapper>
         <HeaderContainer>
-          <Logo to={"/"}>C-ON</Logo>
+          <Logo to={"/admin"}>C-ON</Logo>
           <Menu>
-            <MenuItem to={"/cart"}>장바구니</MenuItem>
-            <MenuItem to={"/myorder"}>마이주문</MenuItem>
+            <MenuItem to={"/food"}>메뉴 관리</MenuItem>
+            <MenuItem to={"/category"}>카테고리 관리</MenuItem>
             <MenuItem to={"login"} onClick={logoutUser}>
               로그아웃
             </MenuItem>

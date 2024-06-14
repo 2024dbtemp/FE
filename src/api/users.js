@@ -123,9 +123,14 @@ export const getFoodbyName = async (name) => {
   }
 };
 
-export const getOrders = async () => {
+export const getOrders = async ({ startDate, endDate }) => {
   try {
-    const response = await instance.get(`/orders`);
+    const response = await instance.get(`/orders`, {
+      params: {
+        startDate: startDate || undefined,
+        endDate: endDate || undefined,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -151,7 +156,7 @@ export const postOrders = async () => {
 
 export const getOrderbyId = async (cartId) => {
   try {
-    const response = await instance.get(`/orders/${cartId}`);
+    const response = await instance.get(`/orders`, { cartId });
     return response.data;
   } catch (error) {
     if (error.response && error.response.status === 404) {

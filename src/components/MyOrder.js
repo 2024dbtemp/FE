@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getOrders } from "../api/users"; // API 호출 함수 임포트
+import { Link } from "react-router-dom";
 
 const OrderWrapper = styled.div`
   max-width: 60vw;
@@ -24,11 +25,13 @@ const OrderItem = styled.div`
   margin-bottom: 10px;
 `;
 
-const OrderItemDetails = styled.div`
+const OrderItemDetails = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: start;
   margin-right: auto;
+  text-decoration: none;
+  color: inherit;
 `;
 
 const OrderItemName = styled.p`
@@ -78,7 +81,7 @@ const MyOrder = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const data = await getOrders();
+        const data = await getOrders({ startDate, endDate });
         console.log(data);
         setOrders(data);
       } catch (error) {
@@ -89,7 +92,7 @@ const MyOrder = () => {
     };
 
     fetchOrders();
-  }, []);
+  }, [startDate, endDate]);
 
   const handleDateChange = (e) => {
     const { name, value } = e.target;
@@ -99,13 +102,6 @@ const MyOrder = () => {
       setEndDate(value);
     }
   };
-
-  const filteredOrders = orders.filter((order) => {
-    const orderDate = new Date(order.orderDate);
-    const start = startDate ? new Date(startDate) : new Date("1970-01-01");
-    const end = endDate ? new Date(endDate) : new Date();
-    return orderDate >= start && orderDate <= end;
-  });
 
   if (loading) {
     return <div>Loading...</div>;
@@ -134,13 +130,12 @@ const MyOrder = () => {
           onChange={handleDateChange}
         />
       </DateInputWrapper>
-      {filteredOrders.map((order, index) => (
+      {orders.map((order, index) => (
         <OrderItem key={index}>
-          <OrderItemImage src={order.imageUrl} alt="음식 이미지" />
-          <OrderItemDetails>
-            <OrderItemName>{order.foodName}</OrderItemName>
+          <OrderItemDetails to={`/orders/${order.cartId}`}>
+            <OrderItemName>{order.representativeFoodName}</OrderItemName>
             <OrderItemDate>
-              {new Date(order.orderDate).toLocaleString()}
+              {new Date(order.orderDateTime).toLocaleString()}
             </OrderItemDate>
           </OrderItemDetails>
           <OrderItemPrice>{order.totalPrice.toLocaleString()}원</OrderItemPrice>

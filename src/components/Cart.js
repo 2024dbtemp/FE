@@ -192,8 +192,8 @@ const Cart = () => {
     try {
       const response = await postOrders();
       if (response.status === 200) {
-        setCartData(null); // 장바구니 초기화
-        alert("주문이 완료되었습니다.");
+        console.log(response.data);
+        setCartData(null);
       }
     } catch (error) {
       console.error("주문 실패", error);

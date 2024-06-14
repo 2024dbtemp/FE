@@ -8,6 +8,7 @@ import { useState } from "react";
 import MenuDetail from "./components/MenuDatail";
 import Cart from "./components/Cart";
 import MyOrder from "./components/MyOrder";
+import OrderDetail from "./components/OderDetail";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,6 +39,7 @@ function App() {
             <Route path="/menu/:name" element={<MenuDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/myorder" element={<MyOrder />} />
+            <Route path="/orders/:cartId" element={<OrderDetail />} />
           </Route>
         </Routes>
       </BrowserRouter>

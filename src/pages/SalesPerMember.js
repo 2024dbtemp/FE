@@ -9,7 +9,7 @@ const SalesWrapper = styled.div`
 `;
 
 const SalesTitle = styled.h1`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 20px;
 `;
@@ -49,6 +49,10 @@ const SalesItemTotalPayment = styled.p`
   text-align: right;
 `;
 
+const Loading = styled.div`
+  text-align: center;
+`;
+
 const SalesPerMember = () => {
   const [salesData, setSalesData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -74,9 +78,9 @@ const SalesPerMember = () => {
     <SalesWrapper>
       <SalesTitle>회원별 결제 총액</SalesTitle>
       {loading ? (
-        <div>Loading...</div>
+        <Loading>Loading...</Loading>
       ) : salesData.length === 0 ? (
-        <div>결제 내역이 없습니다.</div>
+        <Loading>주문 내역이 없습니다.</Loading>
       ) : (
         // 멤버별 판매량을 표시
         salesData.map((member, index) => (
@@ -87,7 +91,9 @@ const SalesPerMember = () => {
               <SalesItemRank>순위: {member.rank}</SalesItemRank>
             </SalesItemDetails>
             <SalesItemTotalPayment>
-              {member.totalPayment.toLocaleString()}원
+              {member.totalPayment && member.totalPayment > 0
+                ? `${member.totalPayment.toLocaleString()}원`
+                : "결제 내역이 없습니다."}
             </SalesItemTotalPayment>
           </SalesItem>
         ))

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { getFood } from "../api/users";
+import MenuImg from "../assets/menu_img.png";
 
 const MenuItem = styled(Link)`
   display: flex;
@@ -30,6 +31,7 @@ const MenuDetails = styled.div`
   align-items: flex-start;
   flex-grow: 1;
   justify-content: center;
+  margin: 0.5rem;
 `;
 
 const MenuName = styled.h4`
@@ -92,7 +94,7 @@ const MenuItems = ({
       {menuItems.map((item, index) => (
         // 해당 부분에서 Link를 써서 단일 메뉴 아이템 하나의 상세 페이지로 이동할 수 있게 함
         <MenuItem key={index} to={`/menu/${encodeURIComponent(item.name)}`}>
-          <MenuImage src={item.imageUrl} alt={item.name} />
+          <MenuImage src={MenuImg} alt={item.name} />
           <MenuDetails>
             <MenuName>{item.name}</MenuName>
             <MenuDescription>{item.description}</MenuDescription>

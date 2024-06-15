@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getFoodbyName, postCart } from "../api/users";
 import styled from "styled-components";
+import MenuImg from "../assets/menu_img.png";
 
 const MenuDetailWrapper = styled.div`
   display: flex;
@@ -152,7 +153,7 @@ const MenuDetail = () => {
         <Title>메뉴 상세</Title>
       </Header>
       <Content>
-        <Image src={menuItem.imageUrl} alt={menuItem.name} />
+        <Image src={MenuImg} alt={menuItem.name} />
         <DetailsWrapper>
           <div>
             <div>

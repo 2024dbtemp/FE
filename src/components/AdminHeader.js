@@ -57,10 +57,11 @@ const Header = ({ onSearch, showSearchBar }) => {
           <Menu>
             {/* 오빠는 여기 메뉴 없애면 돼 그리고 카테고리판매량이랑 음식판매량 둘 중 하나 선택하고 안 쓸 거는 삭제해 파일 이름 따라가서 삭제하면 돼*/}
             <MenuItem to={"/admin"}>메뉴</MenuItem>
-            <MenuItem to={"/admin/sales"}>매출액</MenuItem>
+            {/* <MenuItem to={"/admin/sales"}>매출액</MenuItem>
             <MenuItem to={"/admin/sales/member"}>고객별판매량</MenuItem>
-            <MenuItem to={"/admin/sales/food"}>음식판매량</MenuItem>
-            <MenuItem to={"login"} onClick={logoutUser}>
+            <MenuItem to={"/admin/sales/food"}>음식판매량</MenuItem> */}
+            <MenuItem to={"/admin/statistics"}>관리자페이지</MenuItem>
+            <MenuItem to={"/login"} onClick={logoutUser}>
               로그아웃
             </MenuItem>
           </Menu>

@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getTotalSales } from "../api/admin";
 
+const Wrapper = styled.div`
+  max-width: 60vw;
+  margin: 0 auto;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 3rem;
+`;
+
 const SalesWrapper = styled.div`
   max-width: 60vw;
   margin: 0 auto;
@@ -12,7 +19,7 @@ const SalesWrapper = styled.div`
 `;
 
 const SalesTitle = styled.h1`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 20px;
 `;
@@ -34,12 +41,12 @@ const DateInput = styled.input`
   margin-left: 10px;
 `;
 
-const TotalSales = styled.div`
-  font-size: 1.2rem;
+const Sales = styled.div`
+  font-size: 1.1rem;
   font-weight: bold;
 `;
 
-const AdminTotalSales = () => {
+const TotalSales = () => {
   const [totalSales, setTotalSales] = useState(null);
   const [loading, setLoading] = useState(true);
   const [startDate, setStartDate] = useState("");
@@ -73,7 +80,7 @@ const AdminTotalSales = () => {
   };
 
   return (
-    <div>
+    <Wrapper>
       <SalesTitle>기간별 총 매출액</SalesTitle>
       <SalesWrapper>
         <DateInputWrapper>
@@ -99,16 +106,16 @@ const AdminTotalSales = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <TotalSales>
+          <Sales>
             총 매출액:{" "}
             {totalSales !== null && totalSales !== undefined
               ? `${totalSales.toLocaleString()}원`
               : "0원"}
-          </TotalSales>
+          </Sales>
         )}
       </SalesWrapper>
-    </div>
+    </Wrapper>
   );
 };
 
-export default AdminTotalSales;
+export default TotalSales;

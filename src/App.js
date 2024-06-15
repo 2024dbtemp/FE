@@ -13,6 +13,7 @@ import MenuList from "./pages/MenuList";
 import AdminTotalSales from "./pages/AdminTotalSales";
 import SalesPerMemeber from "./pages/SalesPerMember";
 import SalesByFood from "./pages/SalesByFood";
+import Admin from "./pages/Admin";
 
 function App() {
   //SearchBar 컴포넌트를 통해 메뉴들을 필터링 할 검색어와 가격을 받는 부분
@@ -64,9 +65,10 @@ function App() {
             {/* 야기까지 다 없애도 돼 */}
           </Route>
           <Route element={<AdminHeader showSearchBar={false} />}>
-            <Route path="/admin/sales" element={<AdminTotalSales />} />
+            <Route path="/admin/statistics" element={<Admin />} />
+            {/* <Route path="/admin/sales" element={<AdminTotalSales />} />
             <Route path="/admin/sales/member" element={<SalesPerMemeber />} />
-            <Route path="/admin/sales/food" element={<SalesByFood />} />
+            <Route path="/admin/sales/food" element={<SalesByFood />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

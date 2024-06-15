@@ -7,6 +7,7 @@ import {
   deleteCart,
   postOrders,
 } from "../api/users"; // postOrders 함수 추가
+import MenuImg from "../assets/menu_img.png";
 
 const CartWrapper = styled.div`
   max-width: 60vw;
@@ -237,7 +238,7 @@ const Cart = () => {
       <CartTitle>장바구니</CartTitle>
       {cartData.cartFoodResponses.map((item, index) => (
         <CartItem key={index}>
-          <CartItemImage src={item.imageUrl} alt={item.name} />
+          <CartItemImage src={MenuImg} alt={item.name} />
           <CartItemDetails>
             <CartItemName>{item.name}</CartItemName>
             <CartItemDescription>{item.description}</CartItemDescription>

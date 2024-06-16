@@ -65,7 +65,6 @@ const MenuItems = ({
     try {
       //서버에 파라미터를 보낸 후, 정보를 받아옴
       const data = await getFood(name, minPrice, maxPrice, category);
-      console.log(data);
       setMenuItems(data);
     } catch (error) {
       console.log("메뉴 출력 실패", error);

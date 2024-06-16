@@ -1,12 +1,12 @@
 import React from "react";
 import TotalSales from "../components/TotalSales";
-import SalesPerMember from "./SalesPerMember";
+import SalesByMember from "../components/SalesByMember";
 
 const Admin = () => {
   return (
     <div>
       <TotalSales />
-      <SalesPerMember />
+      <SalesByMember />
     </div>
   );
 };

@@ -9,7 +9,7 @@ const SalesWrapper = styled.div`
 `;
 
 const SalesTitle = styled.h1`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 20px;
 `;
@@ -32,7 +32,7 @@ const SalesItemDetails = styled.div`
 `;
 
 const SalesItemName = styled.p`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
 `;
 

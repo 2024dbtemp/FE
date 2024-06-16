@@ -62,13 +62,14 @@ function App() {
                 <MenuList searchTerm={searchTerm} searchPrice={searchPrice} />
               }
             />
-            {/* 야기까지 다 없애도 돼 */}
+            {/* 여기까지 다 없애도 돼 근데 여기 없애면 경로를 좀 만져줘야 하거든...? 밑에 세개 중에 하나의 path를 /admin으로 바꿔줘야 해*/}
+            {/* 여기서 path를 /admin으로 바꿨으면 AdminHeader.js 페이지 가서 MenuItem에서 to를 /admin으로 바꿔주면 끝 이해 안 가면 연락! */}
           </Route>
           <Route element={<AdminHeader showSearchBar={false} />}>
-            <Route path="/admin/statistics" element={<Admin />} />
-            {/* <Route path="/admin/sales" element={<AdminTotalSales />} />
+            {/* <Route path="/admin/statistics" element={<Admin />} /> */}
+            <Route path="/admin/sales" element={<AdminTotalSales />} />
             <Route path="/admin/sales/member" element={<SalesPerMemeber />} />
-            <Route path="/admin/sales/food" element={<SalesByFood />} /> */}
+            <Route path="/admin/sales/food" element={<SalesByFood />} />
           </Route>
         </Routes>
       </BrowserRouter>

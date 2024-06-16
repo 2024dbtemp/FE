@@ -130,7 +130,6 @@ const MenuDetail = () => {
       foodName: menuItem.name,
       quantity: parseInt(quantity, 10),
     };
-
     try {
       //장바구니 데이터를 서버에 보냄
       const response = await postCart(cartData);

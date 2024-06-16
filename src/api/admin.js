@@ -22,14 +22,9 @@ instance.interceptors.request.use(
   }
 );
 
-export const getTotalSales = async ({ startDate, endDate }) => {
+export const getTotalSales = async () => {
   try {
-    const response = await instance.get("/admin/statistics/total-sales", {
-      params: {
-        startDate: startDate ? `${startDate}:00` : undefined,
-        endDate: endDate ? `${endDate}:59` : undefined,
-      },
-    });
+    const response = await instance.get("/admin/statistics/total-sales");
     return response.data;
   } catch (error) {
     console.log(error);
